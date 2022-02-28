@@ -43,23 +43,8 @@ func install(customVer, defaultVer string) error {
 		return err
 	}
 
-	// setup vars for building the _download url
-	var osName string
-
-	// handle different references of OS systems
-	switch runtime.GOOS {
-	case "darwin":
-		osName = "macOS"
-	case "linux":
-		osName = "linux"
-	case "windows":
-		osName = "windows"
-	default:
-		return fmt.Errorf("unsupported operating system: %s", runtime.GOOS)
-	}
-
 	// create the download URL to install gh
-	url := fmt.Sprintf(_download, customVer, customVer, osName, runtime.GOARCH, customVer, osName, runtime.GOARCH)
+	url := fmt.Sprintf(_download, customVer, customVer, runtime.GOOS, runtime.GOARCH, customVer, runtime.GOOS, runtime.GOARCH)
 
 	logrus.Infof("downloading gh version from: %s", url)
 	// send the HTTP request to install gh
