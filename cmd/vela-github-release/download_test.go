@@ -95,7 +95,7 @@ func TestGithubRelease_Download_Validate_Error(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			if err := test.d.Validate(); err == nil {
 				t.Errorf("Validate() should have raised an error %v", test.wantErr)
-			} else if errors.Is(err, test.wantErr) {
+			} else if !errors.Is(err, test.wantErr) {
 				t.Errorf("Validate() error = %v, wantErr = %v", err, test.wantErr)
 			}
 		})
