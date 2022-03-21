@@ -1,9 +1,9 @@
 # vela-github-release
 
 [![license](https://img.shields.io/crates/l/gl.svg)](../LICENSE)
-[![GoDoc](https://godoc.org/github.com/go-vela/vela-slack?status.svg)](https://godoc.org/github.com/go-vela/vela-github-release)
-[![Go Report Card](https://goreportcard.com/badge/go-vela/vela-slack)](https://goreportcard.com/report/go-vela/vela-github-release)
-[![codecov](https://codecov.io/gh/go-vela/vela-slack/branch/main/graph/badge.svg)](https://codecov.io/gh/go-vela/vela-github-release)
+[![GoDoc](https://godoc.org/github.com/go-vela/vela-github-release?status.svg)](https://godoc.org/github.com/go-vela/vela-github-release)
+[![Go Report Card](https://goreportcard.com/badge/go-vela/vela-github-release)](https://goreportcard.com/report/go-vela/vela-github-release)
+[![codecov](https://codecov.io/gh/go-vela/vela-github-release/branch/main/graph/badge.svg)](https://codecov.io/gh/go-vela/vela-github-release)
 
 Vela plugin designed to manage GitHub releases [GitHub CLI](https://cli.github.com/manual/) in a Vela pipeline.
 
