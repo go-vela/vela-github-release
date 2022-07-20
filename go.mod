@@ -9,7 +9,7 @@ require (
 	github.com/joho/godotenv v1.4.0
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/afero v1.8.2
-	github.com/urfave/cli/v2 v2.8.1
+	github.com/urfave/cli/v2 v2.11.1
 )
 
 require (
@@ -19,7 +19,7 @@ require (
 	cloud.google.com/go/storage v1.21.0 // indirect
 	github.com/aws/aws-sdk-go v1.43.17 // indirect
 	github.com/bgentry/go-netrc v0.0.0-20140422174119-9fd32a8b3d3d // indirect
-	github.com/cpuguy83/go-md2man/v2 v2.0.1 // indirect
+	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.7 // indirect
