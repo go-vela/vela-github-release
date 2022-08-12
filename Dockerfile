@@ -5,7 +5,7 @@
 # set a global Docker argument for the default CLI version
 #
 # https://github.com/moby/moby/issues/37345
-ARG GH_VERSION=1.4.0
+ARG GH_VERSION=2.14.4
 
 ###################################################################################
 ##    docker build --no-cache --target binary -t vela-github-release:binary .    ##
