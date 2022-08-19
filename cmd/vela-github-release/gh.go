@@ -17,7 +17,7 @@ import (
 const (
 	_gh       = "/bin/gh"
 	_ghTmp    = "/bin/download"
-	_download = "https://github.com/cli/cli/releases/download/v%s/gh_%s_%s_%s.tar.gz/gh_%s_%s_%s/bin"
+	_download = "https://github.com/cli/cli/releases/download/v%s/gh_%s_%s_%s.tar.gz//gh_%s_%s_%s/bin"
 )
 
 // install downloads a custom version of the gh cli.
