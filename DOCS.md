@@ -19,7 +19,7 @@ Sample of creating a GitHub release:
 ```yaml
 steps:
   - name: gh
-    image: target/vela-github-release:v0.1.0
+    image: target/vela-github-release:latest
     pull: always
     parameters:
       action: create
@@ -32,7 +32,7 @@ Sample of deleting release files:
 ```yaml
 steps:
   - name: gh
-    image: target/vela-github-release:v0.1.0
+    image: target/vela-github-release:latest
     pull: always
     parameters:
       action: delete
@@ -44,7 +44,7 @@ Sample of downloading assets from a release in a project:
 ```yaml
 steps:
   - name: gh
-    image: target/vela-github-release:v0.1.0
+    image: target/vela-github-release:latest
     pull: always
     parameters:
       action: download
@@ -56,7 +56,7 @@ Sample of listing releases in a repository:
 ```yaml
 steps:
   - name: gh
-    image: target/vela-github-release:v0.1.0
+    image: target/vela-github-release:latest
     pull: always
     parameters:
       action: list
@@ -67,7 +67,7 @@ Sample of uploading assets to a gh release:
 ```yaml
 steps:
   - name: gh
-    image: target/vela-github-release:v0.1.0
+    image: target/vela-github-release:latest
     pull: always
     parameters:
       action: upload
@@ -80,7 +80,7 @@ Sample of viewing information about a gh release:
 ```yaml
 steps:
   - name: gh
-    image: target/vela-github-release:v0.1.0
+    image: target/vela-github-release:latest
     pull: always
     parameters:
       action: view
@@ -129,7 +129,7 @@ Users can use [Vela external secrets](https://go-vela.github.io/docs/concepts/pi
 ```diff
 steps:
   - name: gh
-    image: target/vela-github-release:v0.1.0
+    image: target/vela-github-release:latest
     pull: always
 +   secrets: [github_token]
     parameters:
@@ -157,7 +157,7 @@ The following parameters are used to configure the image:
 | `hostname`  | hostname to set for GitHub instance              | `true`   | `github.com` | `PARAMETER_HOSTNAME`<br>`GH_HOST`<br>`GITHUB_HOST`                      |
 | `token`     | token to set to authenticate to GitHub instance  | `true`   | `N/A`        | `PARAMETER_TOKEN`<br>`CONFIG_TOKEN`<br>`GH_TOKEN`<br>`GITHUB_TOKEN`     |
 | `log_level` | set the log level for the plugin                 | `true`   | `info`       | `PARAMETER_LOG_LEVEL`<br>`VELA_LOG_LEVEL`<br>`GITHUB_RELEASE_LOG_LEVEL` |
-| `version`   | version of the `gh` CLI to install               | `false`  | `v1.4.0`     | `PARAMETER_VERSION`<br>`VELA_GH_VERSION`<br>`GH_VERSION`                |
+| `version`   | version of the `gh` CLI to install               | `false`  | `v2.14.4`     | `PARAMETER_VERSION`<br>`VELA_GH_VERSION`<br>`GH_VERSION`                |
 
 #### Create
 
@@ -228,7 +228,7 @@ You can start troubleshooting this plugin by tuning the level of logs being disp
 ```diff
 steps:
   - name: github-release
-    image: target/vela-github-release:v0.1.0
+    image: target/vela-github-release:latest
     pull: always
     parameters:
       action: create
