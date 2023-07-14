@@ -27,7 +27,7 @@ RUN chmod 0700 /bin/gh
 ##    docker build --no-cache -t vela-github-release:local .    ##
 ##################################################################
 
-FROM alpine:3.16
+FROM alpine:3.18
 
 ARG GH_VERSION
 
