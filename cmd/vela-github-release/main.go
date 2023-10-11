@@ -1,6 +1,4 @@
-// Copyright (c) 2022 Target Brands, Inc. All rights reserved.
-//
-// Use of this source code is governed by the LICENSE file in this repository.
+// SPDX-License-Identifier: Apache-2.0
 
 package main
 
@@ -34,7 +32,7 @@ func main() {
 		Name:      "vela-github-release",
 		HelpName:  "vela-github-release",
 		Usage:     "Vela Github Release plugin for managing Gihub Releases in a Vela Pipeline.",
-		Copyright: "Copyright (c) 2022 Target Brands, Inc. All rights reserved.",
+		Copyright: "Copyright 2022 Target Brands, Inc. All rights reserved.",
 		Authors: []*cli.Author{
 			{
 				Name:  "Vela Admins",
