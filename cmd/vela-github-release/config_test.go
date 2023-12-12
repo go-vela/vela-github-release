@@ -21,7 +21,7 @@ func TestGithubRelease_Config_Command(t *testing.T) {
 		Token:    "token",
 	}
 
-	// nolint:gosec // ignore for testing purposes
+	//nolint:gosec // ignore for testing purposes
 	want := exec.Command(
 		_gh,
 		"auth",

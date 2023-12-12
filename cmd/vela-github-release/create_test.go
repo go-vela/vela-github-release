@@ -23,7 +23,7 @@ func TestGithubRelease_Create_Command(t *testing.T) {
 		Title:      "title",
 	}
 
-	// nolint:gosec // ignore for testing purposes
+	//nolint:gosec // ignore for testing purposes
 	want := exec.Command(
 		_gh,
 		releaseCmd,

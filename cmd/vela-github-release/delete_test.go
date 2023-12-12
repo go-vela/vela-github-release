@@ -17,7 +17,7 @@ func TestGithubRelease_Delete_Command(t *testing.T) {
 		Yes: false,
 	}
 
-	// nolint:gosec // ignore for testing purposes
+	//nolint:gosec // ignore for testing purposes
 	want := exec.Command(
 		_gh,
 		releaseCmd,
