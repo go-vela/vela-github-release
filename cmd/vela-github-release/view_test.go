@@ -17,7 +17,7 @@ func TestGithubRelease_View_Command(t *testing.T) {
 		Web: false,
 	}
 
-	// nolint:gosec // ignore for testing purposes
+	//nolint:gosec // ignore for testing purposes
 	want := exec.Command(
 		_gh,
 		releaseCmd,
