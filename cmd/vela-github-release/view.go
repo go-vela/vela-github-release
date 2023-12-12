@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
-// nolint: dupl // ignore code similarity to keep consistent structure
+//nolint: dupl // ignore code similarity to keep consistent structure
 package main
 
 import (
