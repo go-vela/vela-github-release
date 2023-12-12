@@ -18,7 +18,7 @@ func TestGithubRelease_Upload_Command(t *testing.T) {
 		Tag:     "tag",
 	}
 
-	// nolint:gosec // ignore for testing purposes
+	//nolint:gosec // ignore for testing purposes
 	want := exec.Command(
 		_gh,
 		releaseCmd,
