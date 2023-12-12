@@ -16,7 +16,7 @@ func TestGithubRelease_List_Command(t *testing.T) {
 		Limit: 30,
 	}
 
-	// nolint:gosec // ignore for testing purposes
+	//nolint:gosec // ignore for testing purposes
 	want := exec.Command(
 		_gh,
 		releaseCmd,
