@@ -9,7 +9,7 @@ ARG GH_VERSION=2.14.4
 ##    docker build --no-cache --target binary -t vela-github-release:binary .    ##
 ###################################################################################
 
-FROM alpine:3.19.0@sha256:51b67269f354137895d43f3b3d810bfacd3945438e94dc5ac55fdac340352f48 as binary
+FROM alpine:3.19.1@sha256:c5b1261d6d3e43071626931fc004f70149baeba2c8ec672bd4f27761f8e1ad6b as binary
 
 ARG GH_VERSION
 
@@ -25,7 +25,7 @@ RUN chmod 0700 /bin/gh
 ##    docker build --no-cache -t vela-github-release:local .    ##
 ##################################################################
 
-FROM alpine:3.19.0@sha256:51b67269f354137895d43f3b3d810bfacd3945438e94dc5ac55fdac340352f48
+FROM alpine:3.19.1@sha256:c5b1261d6d3e43071626931fc004f70149baeba2c8ec672bd4f27761f8e1ad6b
 
 ARG GH_VERSION
 
