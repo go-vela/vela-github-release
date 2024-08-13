@@ -16,3 +16,4 @@
 
 # Binary release folder
 release/
+.idea/
