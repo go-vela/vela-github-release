@@ -3,7 +3,8 @@
 # set a global Docker argument for the default CLI version
 #
 # https://github.com/moby/moby/issues/37345
-ARG GH_VERSION=2.14.4
+# renovate: datasource=github-tags depName=cli/cli
+ARG GH_VERSION=2.55.0
 
 ###################################################################################
 ##    docker build --no-cache --target binary -t vela-github-release:binary .    ##
@@ -13,13 +14,17 @@ FROM alpine:3.20.2@sha256:0a4eaa0eecf5f8c050e5bba433f58c052be7587ee8af3e8b3910ef
 
 ARG GH_VERSION
 
-ADD https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.tar.gz /tmp/gh.tar.gz
+ENV GH_RELEASE_URL="https://github.com/cli/cli/releases/download/v${GH_VERSION}"
+ENV GH_FILENAME="gh_${GH_VERSION}_linux_amd64.tar.gz"
+ENV GH_CHECKSUM_FILENAME="gh_${GH_VERSION}_checksums.txt"
 
-RUN tar -xzf /tmp/gh.tar.gz -C /bin
+RUN wget -q "${GH_RELEASE_URL}/${GH_FILENAME}" -O "${GH_FILENAME}" && \
+  wget -q "${GH_RELEASE_URL}/${GH_CHECKSUM_FILENAME}" -O "${GH_CHECKSUM_FILENAME}" && \
+  grep "${GH_FILENAME}" "${GH_CHECKSUM_FILENAME}" | sha256sum -c && \
+  tar -xf "${GH_FILENAME}" && \
+  mv "${GH_FILENAME%.tar.gz}/bin/gh" /bin/gh && \
+  chmod 0700 /bin/gh
 
-RUN cp /bin/gh_${GH_VERSION}_linux_amd64/bin/gh /bin/gh
-
-RUN chmod 0700 /bin/gh
 
 ##################################################################
 ##    docker build --no-cache -t vela-github-release:local .    ##
