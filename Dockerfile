@@ -3,7 +3,7 @@
 # set a global Docker argument for the default CLI version
 #
 # https://github.com/moby/moby/issues/37345
-# renovate: datasource=github-tags depName=cli/cli
+# renovate: datasource=github-tags depName=cli/cli extractVersion=^v(?<version>.*)$
 ARG GH_VERSION=2.55.0
 
 ###################################################################################
