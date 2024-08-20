@@ -1,4 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["local>go-vela/renovate-config"]
+  "extends": [
+    "local>go-vela/renovate-config",
+    "customManagers:dockerfileVersions"
+  ]
 }
