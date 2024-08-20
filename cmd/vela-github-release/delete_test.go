@@ -22,7 +22,7 @@ func TestGithubRelease_Delete_Command(t *testing.T) {
 		_gh,
 		releaseCmd,
 		deleteAction,
-		fmt.Sprintf(d.Tag),
+		d.Tag,
 		fmt.Sprintf("--yes=%t", false),
 	)
 
