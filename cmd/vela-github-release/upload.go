@@ -6,16 +6,15 @@ import (
 	"errors"
 	"fmt"
 	"os/exec"
+	"path/filepath"
 
 	"github.com/sirupsen/logrus"
 )
 
 const uploadAction = "upload"
 
-var (
-	// ErrorNoUploadTag is returned when the plugin is missing the upload tag.
-	ErrorNoUploadTag = errors.New("no upload tag provided")
-)
+// ErrorNoUploadTag is returned when the plugin is missing the upload tag.
+var ErrorNoUploadTag = errors.New("no upload tag provided")
 
 // Upload represents the plugin configuration for Upload config information.
 type Upload struct {
@@ -47,8 +46,21 @@ func (u *Upload) Command() *exec.Cmd {
 		flags = append(flags, u.Tag)
 	}
 
-	// add flag for files provided by upload files
-	flags = append(flags, u.Files...)
+	// iterate through the files and add them as parameters
+	for _, file := range u.Files {
+		f, err := filepath.Glob(file)
+		if err != nil {
+			logrus.Warnf("bad file pattern: %v", err)
+		}
+
+		if f == nil {
+			logrus.Warnf("no file matches found for %s", file)
+
+			continue
+		}
+
+		flags = append(flags, f...)
+	}
 
 	// add flag for upload from provided upload
 	flags = append(flags, fmt.Sprintf("--clobber=%t", u.Clobber))

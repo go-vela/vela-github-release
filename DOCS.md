@@ -27,6 +27,22 @@ steps:
       tag: v0.1.0
 ```
 
+Sample of creating a GitHub release, attaching all `.pdf` files in the current directory:
+
+```yaml
+steps:
+  - name: gh
+    image: target/vela-github-release:latest
+    pull: always
+    parameters:
+      action: create
+      files: [ "*.pdf" ]
+      tag: v0.1.0
+```
+
+> [!IMPORTANT]
+> This uses [Go's implementation of glob patterns](https://pkg.go.dev/path/filepath#Match)
+
 Sample of deleting release files:
 
 ```yaml
@@ -74,6 +90,22 @@ steps:
       files: [ changelog.md ]
       tag: v0.1.0
 ```
+
+Sample of uploading assets using glob pattern to a gh release:
+
+```yaml
+steps:
+  - name: gh
+    image: target/vela-github-release:latest
+    pull: always
+    parameters:
+      action: upload
+      files: [ "*.pdf" ]
+      tag: v0.1.0
+```
+
+> [!IMPORTANT]
+> This uses [Go's implementation of glob patterns](https://pkg.go.dev/path/filepath#Match)
 
 Sample of viewing information about a gh release:
 
