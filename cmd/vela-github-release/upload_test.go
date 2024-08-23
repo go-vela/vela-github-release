@@ -14,7 +14,7 @@ func TestGithubRelease_Upload_Command(t *testing.T) {
 	// setup types
 	u := &Upload{
 		Clobber: false,
-		Files:   []string{"files"},
+		Files:   []string{"testdata/file"},
 		Tag:     "tag",
 	}
 
@@ -24,7 +24,83 @@ func TestGithubRelease_Upload_Command(t *testing.T) {
 		releaseCmd,
 		uploadAction,
 		"tag",
-		"files",
+		"testdata/file",
+		fmt.Sprintf("--clobber=%t", u.Clobber),
+	)
+
+	got := u.Command()
+
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("execCmd is %v, want %v", got, want)
+	}
+}
+
+func TestGithubRelease_Upload_Command_FileMissing(t *testing.T) {
+	// setup types
+	u := &Upload{
+		Clobber: false,
+		Files:   []string{"testdata/file_missing"},
+		Tag:     "tag",
+	}
+
+	//nolint:gosec // ignore for testing purposes
+	want := exec.Command(
+		_gh,
+		releaseCmd,
+		uploadAction,
+		"tag",
+		fmt.Sprintf("--clobber=%t", u.Clobber),
+	)
+
+	got := u.Command()
+
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("execCmd is %v, want %v", got, want)
+	}
+}
+
+func TestGithubRelease_Upload_Command_MultipleFiles(t *testing.T) {
+	// setup types
+	u := &Upload{
+		Clobber: false,
+		Files:   []string{"testdata/test1.txt", "testdata/test2.txt"},
+		Tag:     "tag",
+	}
+
+	//nolint:gosec // ignore for testing purposes
+	want := exec.Command(
+		_gh,
+		releaseCmd,
+		uploadAction,
+		"tag",
+		"testdata/test1.txt",
+		"testdata/test2.txt",
+		fmt.Sprintf("--clobber=%t", u.Clobber),
+	)
+
+	got := u.Command()
+
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("execCmd is %v, want %v", got, want)
+	}
+}
+
+func TestGithubRelease_Upload_Command_MultipleFilesGlob(t *testing.T) {
+	// setup types
+	u := &Upload{
+		Clobber: false,
+		Files:   []string{"testdata/*.txt"},
+		Tag:     "tag",
+	}
+
+	//nolint:gosec // ignore for testing purposes
+	want := exec.Command(
+		_gh,
+		releaseCmd,
+		uploadAction,
+		"tag",
+		"testdata/test1.txt",
+		"testdata/test2.txt",
 		fmt.Sprintf("--clobber=%t", u.Clobber),
 	)
 

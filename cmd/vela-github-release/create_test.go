@@ -14,7 +14,7 @@ func TestGithubRelease_Create_Command(t *testing.T) {
 	// setup types
 	c := &Create{
 		Draft:      false,
-		Files:      []string{"file"},
+		Files:      []string{"testdata/file"},
 		Notes:      "notes",
 		NotesFile:  "notes_file",
 		Prerelease: false,
@@ -29,7 +29,113 @@ func TestGithubRelease_Create_Command(t *testing.T) {
 		releaseCmd,
 		createAction,
 		"tag",
-		"file",
+		"testdata/file",
+		fmt.Sprintf("--draft=%t", false),
+		fmt.Sprintf("--notes=%s", c.Notes),
+		fmt.Sprintf("--notes-file=%s", c.NotesFile),
+		fmt.Sprintf("--prerelease=%t", false),
+		fmt.Sprintf("--target=%s", c.Target),
+		fmt.Sprintf("--title=%s", c.Title),
+	)
+
+	got := c.Command()
+
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("execCmd is %v, want %v", got, want)
+	}
+}
+
+func TestGithubRelease_Create_Command_FileMissing(t *testing.T) {
+	// setup types
+	c := &Create{
+		Draft:      false,
+		Files:      []string{"testdata/file_missing"},
+		Notes:      "notes",
+		NotesFile:  "notes_file",
+		Prerelease: false,
+		Tag:        "tag",
+		Target:     "target",
+		Title:      "title",
+	}
+
+	//nolint:gosec // ignore for testing purposes
+	want := exec.Command(
+		_gh,
+		releaseCmd,
+		createAction,
+		"tag",
+		fmt.Sprintf("--draft=%t", false),
+		fmt.Sprintf("--notes=%s", c.Notes),
+		fmt.Sprintf("--notes-file=%s", c.NotesFile),
+		fmt.Sprintf("--prerelease=%t", false),
+		fmt.Sprintf("--target=%s", c.Target),
+		fmt.Sprintf("--title=%s", c.Title),
+	)
+
+	got := c.Command()
+
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("execCmd is %v, want %v", got, want)
+	}
+}
+
+func TestGithubRelease_Create_Command_MultipleFiles(t *testing.T) {
+	// setup types
+	c := &Create{
+		Draft:      false,
+		Files:      []string{"testdata/test1.txt", "testdata/test2.txt"},
+		Notes:      "notes",
+		NotesFile:  "notes_file",
+		Prerelease: false,
+		Tag:        "tag",
+		Target:     "target",
+		Title:      "title",
+	}
+
+	//nolint:gosec // ignore for testing purposes
+	want := exec.Command(
+		_gh,
+		releaseCmd,
+		createAction,
+		"tag",
+		"testdata/test1.txt",
+		"testdata/test2.txt",
+		fmt.Sprintf("--draft=%t", false),
+		fmt.Sprintf("--notes=%s", c.Notes),
+		fmt.Sprintf("--notes-file=%s", c.NotesFile),
+		fmt.Sprintf("--prerelease=%t", false),
+		fmt.Sprintf("--target=%s", c.Target),
+		fmt.Sprintf("--title=%s", c.Title),
+	)
+
+	got := c.Command()
+
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("execCmd is %v, want %v", got, want)
+	}
+}
+
+func TestGithubRelease_Create_Command_MultipleFilesGlob(t *testing.T) {
+	// setup types
+	c := &Create{
+		Draft:      false,
+		Files:      []string{"testdata/*.txt"},
+		Notes:      "notes",
+		NotesFile:  "notes_file",
+		Prerelease: false,
+		Tag:        "tag",
+		Target:     "target",
+		Title:      "title",
+	}
+
+	//nolint:gosec // ignore for testing purposes
+	want := exec.Command(
+		_gh,
+		releaseCmd,
+		createAction,
+		"tag",
+		"testdata/test1.txt",
+		"testdata/test2.txt",
 		fmt.Sprintf("--draft=%t", false),
 		fmt.Sprintf("--notes=%s", c.Notes),
 		fmt.Sprintf("--notes-file=%s", c.NotesFile),

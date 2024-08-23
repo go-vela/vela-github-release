@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"os/exec"
+	"path/filepath"
 
 	"github.com/sirupsen/logrus"
 )
@@ -60,8 +61,21 @@ func (c *Create) Command() *exec.Cmd {
 		flags = append(flags, c.Tag)
 	}
 
-	// add flag for files provided by create files
-	flags = append(flags, c.Files...)
+	// iterate through the files and add them as parameters
+	for _, file := range c.Files {
+		f, err := filepath.Glob(file)
+		if err != nil {
+			logrus.Warnf("bad file pattern: %v", err)
+		}
+
+		if f == nil {
+			logrus.Warnf("no file matches found for %s", file)
+
+			continue
+		}
+
+		flags = append(flags, f...)
+	}
 
 	// add flag for draft from provided create draft
 	flags = append(flags, fmt.Sprintf("--draft=%t", c.Draft))
