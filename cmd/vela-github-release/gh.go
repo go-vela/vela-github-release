@@ -3,6 +3,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"runtime"
 	"strings"
@@ -46,7 +47,7 @@ func install(customVer, defaultVer string) error {
 
 	logrus.Infof("downloading gh version from: %s", url)
 	// send the HTTP request to install gh
-	err = getter.Get(_ghTmp, url, []getter.ClientOption{}...)
+	_, err = getter.Get(context.Background(), _ghTmp, url)
 	if err != nil {
 		return err
 	}
