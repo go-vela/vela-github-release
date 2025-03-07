@@ -4,7 +4,7 @@
 #
 # https://github.com/moby/moby/issues/37345
 # renovate: datasource=github-tags depName=cli/cli extractVersion=^v(?<version>.*)$
-ARG GH_VERSION=2.67.0
+ARG GH_VERSION=2.68.1
 
 ###################################################################################
 ##    docker build --no-cache --target binary -t vela-github-release:binary .    ##
