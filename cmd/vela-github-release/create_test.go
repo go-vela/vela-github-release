@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"os/exec"
-	"reflect"
 	"testing"
 )
 
@@ -40,8 +39,18 @@ func TestGithubRelease_Create_Command(t *testing.T) {
 
 	got := c.Command()
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("execCmd is %v, want %v", got, want)
+	if got.Path != want.Path {
+		t.Errorf("Command path is %v, want %v", got.Path, want.Path)
+	}
+
+	if len(got.Args) != len(want.Args) {
+		t.Errorf("Command args length is %v, want %v", len(got.Args), len(want.Args))
+	}
+
+	for i, arg := range got.Args {
+		if i < len(want.Args) && arg != want.Args[i] {
+			t.Errorf("Command args[%d] is %v, want %v", i, arg, want.Args[i])
+		}
 	}
 }
 
@@ -74,8 +83,18 @@ func TestGithubRelease_Create_Command_FileMissing(t *testing.T) {
 
 	got := c.Command()
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("execCmd is %v, want %v", got, want)
+	if got.Path != want.Path {
+		t.Errorf("Command path is %v, want %v", got.Path, want.Path)
+	}
+
+	if len(got.Args) != len(want.Args) {
+		t.Errorf("Command args length is %v, want %v", len(got.Args), len(want.Args))
+	}
+
+	for i, arg := range got.Args {
+		if i < len(want.Args) && arg != want.Args[i] {
+			t.Errorf("Command args[%d] is %v, want %v", i, arg, want.Args[i])
+		}
 	}
 }
 
@@ -110,8 +129,18 @@ func TestGithubRelease_Create_Command_MultipleFiles(t *testing.T) {
 
 	got := c.Command()
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("execCmd is %v, want %v", got, want)
+	if got.Path != want.Path {
+		t.Errorf("Command path is %v, want %v", got.Path, want.Path)
+	}
+
+	if len(got.Args) != len(want.Args) {
+		t.Errorf("Command args length is %v, want %v", len(got.Args), len(want.Args))
+	}
+
+	for i, arg := range got.Args {
+		if i < len(want.Args) && arg != want.Args[i] {
+			t.Errorf("Command args[%d] is %v, want %v", i, arg, want.Args[i])
+		}
 	}
 }
 
@@ -146,8 +175,18 @@ func TestGithubRelease_Create_Command_MultipleFilesGlob(t *testing.T) {
 
 	got := c.Command()
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("execCmd is %v, want %v", got, want)
+	if got.Path != want.Path {
+		t.Errorf("Command path is %v, want %v", got.Path, want.Path)
+	}
+
+	if len(got.Args) != len(want.Args) {
+		t.Errorf("Command args length is %v, want %v", len(got.Args), len(want.Args))
+	}
+
+	for i, arg := range got.Args {
+		if i < len(want.Args) && arg != want.Args[i] {
+			t.Errorf("Command args[%d] is %v, want %v", i, arg, want.Args[i])
+		}
 	}
 }
 

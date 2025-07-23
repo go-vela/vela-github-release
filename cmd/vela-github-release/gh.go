@@ -20,7 +20,7 @@ const (
 )
 
 // install downloads a custom version of the gh cli.
-func install(customVer, defaultVer string) error {
+func install(ctx context.Context, customVer, defaultVer string) error {
 	logrus.Infof("custom gh version requested: %s", customVer)
 
 	// use custom filesystem which enables us to test
@@ -47,7 +47,7 @@ func install(customVer, defaultVer string) error {
 
 	logrus.Infof("downloading gh version from: %s", url)
 	// send the HTTP request to install gh
-	_, err = getter.Get(context.Background(), _ghTmp, url)
+	_, err = getter.Get(ctx, _ghTmp, url)
 	if err != nil {
 		return err
 	}
