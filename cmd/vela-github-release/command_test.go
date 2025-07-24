@@ -11,7 +11,7 @@ import (
 
 func TestGithubRelease_execCmd(t *testing.T) {
 	// setup types
-	e := exec.Command("echo", "hello")
+	e := exec.CommandContext(context.Background(), "echo", "hello")
 
 	err := execCmd(e, os.Stdin)
 	if err != nil {
