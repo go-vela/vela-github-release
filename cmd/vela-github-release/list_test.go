@@ -3,6 +3,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os/exec"
@@ -16,14 +17,15 @@ func TestGithubRelease_List_Command(t *testing.T) {
 	}
 
 	//nolint:gosec // ignore for testing purposes
-	want := exec.Command(
+	want := exec.CommandContext(
+		context.Background(),
 		_gh,
 		releaseCmd,
 		listAction,
 		fmt.Sprintf("--limit=%d", l.Limit),
 	)
 
-	got := l.Command()
+	got := l.Command(context.Background())
 
 	if got.Path != want.Path {
 		t.Errorf("Command path is %v, want %v", got.Path, want.Path)
@@ -46,7 +48,7 @@ func TestGithubRelease_List_Exec_Error(t *testing.T) {
 		Limit: 30,
 	}
 
-	err := l.Exec()
+	err := l.Exec(context.Background())
 	if err == nil {
 		t.Errorf("Exec should have returned err: %v", err)
 	}

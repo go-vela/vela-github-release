@@ -3,6 +3,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os"
@@ -40,7 +41,7 @@ type Config struct {
 
 // Command formats and outputs the Config command from
 // the provided configuration to config resources.
-func (c *Config) Command() *exec.Cmd {
+func (c *Config) Command(ctx context.Context) *exec.Cmd {
 	logrus.Trace("creating gh config command from plugin configuration")
 
 	// variable to store flags for command
@@ -57,12 +58,12 @@ func (c *Config) Command() *exec.Cmd {
 	// add flag for with token command
 	flags = append(flags, "--with-token")
 
-	return exec.Command(_gh, flags...)
+	return exec.CommandContext(ctx, _gh, flags...)
 }
 
 // Exec formats and runs the commands for applying
 // the provided configuration to the resouces.
-func (c *Config) Exec() error {
+func (c *Config) Exec(ctx context.Context) error {
 	logrus.Debug("running config with provided configuration")
 
 	// create gh token file for authentication
@@ -79,7 +80,7 @@ func (c *Config) Exec() error {
 	defer file.Close()
 
 	// create command for the gh auth login
-	cmd := c.Command()
+	cmd := c.Command(ctx)
 
 	// run the config command for the gh auth login
 	err = execCmd(cmd, file)

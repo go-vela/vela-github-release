@@ -4,6 +4,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os/exec"
@@ -28,7 +29,7 @@ type View struct {
 
 // Command formats and outputs the View command from
 // the provided configuration to view resources.
-func (v *View) Command() *exec.Cmd {
+func (v *View) Command(ctx context.Context) *exec.Cmd {
 	logrus.Trace("creatig gh view command from plugin configuration")
 
 	// variable to store flags for command
@@ -49,16 +50,16 @@ func (v *View) Command() *exec.Cmd {
 	// add flag for the view from provided view
 	flags = append(flags, fmt.Sprintf("--web=%t", v.Web))
 
-	return exec.Command(_gh, flags...)
+	return exec.CommandContext(ctx, _gh, flags...)
 }
 
 // Exec formats and runs the commands for applying
 // the provided configuration to the resources.
-func (v *View) Exec() error {
+func (v *View) Exec(ctx context.Context) error {
 	logrus.Debug("running view with provided configuration")
 
 	// view command for the release in a browser
-	cmd := v.Command()
+	cmd := v.Command(ctx)
 
 	// run the view command for the release in a browser
 	err := execCmd(cmd, nil)

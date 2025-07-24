@@ -3,6 +3,7 @@
 package main
 
 import (
+	"context"
 	"os"
 	"os/exec"
 	"testing"
@@ -19,12 +20,13 @@ func TestGithubRelease_execCmd(t *testing.T) {
 }
 
 func TestGithubRelease_versionCmd(t *testing.T) {
-	want := exec.Command(
+	want := exec.CommandContext(
+		context.Background(),
 		_gh,
 		"version",
 	)
 
-	got := versionCmd()
+	got := versionCmd(context.Background())
 
 	if got.Path != want.Path {
 		t.Errorf("Command path is %v, want %v", got.Path, want.Path)

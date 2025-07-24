@@ -4,6 +4,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os/exec"
@@ -28,7 +29,7 @@ type Delete struct {
 
 // Command formats and outputs the Delete command from
 // the provided configuration to delete resources.
-func (d *Delete) Command() *exec.Cmd {
+func (d *Delete) Command(ctx context.Context) *exec.Cmd {
 	logrus.Trace("creating gh delete command from plugin configuration")
 
 	// variable to store flags for command
@@ -49,16 +50,16 @@ func (d *Delete) Command() *exec.Cmd {
 	// add flag for delete from provided delete
 	flags = append(flags, fmt.Sprintf("--yes=%t", d.Yes))
 
-	return exec.Command(_gh, flags...)
+	return exec.CommandContext(ctx, _gh, flags...)
 }
 
 // Exec formats and runs the commands for applying
 // the provided configuration to the resources.
-func (d *Delete) Exec() error {
+func (d *Delete) Exec(ctx context.Context) error {
 	logrus.Debug("running delete with provided configuration")
 
 	// delete command for the target branch
-	cmd := d.Command()
+	cmd := d.Command(ctx)
 
 	// run the delete command for the target branch
 	err := execCmd(cmd, nil)

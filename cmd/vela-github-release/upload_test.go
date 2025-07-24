@@ -3,6 +3,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os/exec"
@@ -18,7 +19,8 @@ func TestGithubRelease_Upload_Command(t *testing.T) {
 	}
 
 	//nolint:gosec // ignore for testing purposes
-	want := exec.Command(
+	want := exec.CommandContext(
+		context.Background(),
 		_gh,
 		releaseCmd,
 		uploadAction,
@@ -27,7 +29,7 @@ func TestGithubRelease_Upload_Command(t *testing.T) {
 		fmt.Sprintf("--clobber=%t", u.Clobber),
 	)
 
-	got := u.Command()
+	got := u.Command(context.Background())
 
 	if got.Path != want.Path {
 		t.Errorf("Command path is %v, want %v", got.Path, want.Path)
@@ -53,7 +55,8 @@ func TestGithubRelease_Upload_Command_FileMissing(t *testing.T) {
 	}
 
 	//nolint:gosec // ignore for testing purposes
-	want := exec.Command(
+	want := exec.CommandContext(
+		context.Background(),
 		_gh,
 		releaseCmd,
 		uploadAction,
@@ -61,7 +64,7 @@ func TestGithubRelease_Upload_Command_FileMissing(t *testing.T) {
 		fmt.Sprintf("--clobber=%t", u.Clobber),
 	)
 
-	got := u.Command()
+	got := u.Command(context.Background())
 
 	if got.Path != want.Path {
 		t.Errorf("Command path is %v, want %v", got.Path, want.Path)
@@ -87,7 +90,8 @@ func TestGithubRelease_Upload_Command_MultipleFiles(t *testing.T) {
 	}
 
 	//nolint:gosec // ignore for testing purposes
-	want := exec.Command(
+	want := exec.CommandContext(
+		context.Background(),
 		_gh,
 		releaseCmd,
 		uploadAction,
@@ -97,7 +101,7 @@ func TestGithubRelease_Upload_Command_MultipleFiles(t *testing.T) {
 		fmt.Sprintf("--clobber=%t", u.Clobber),
 	)
 
-	got := u.Command()
+	got := u.Command(context.Background())
 
 	if got.Path != want.Path {
 		t.Errorf("Command path is %v, want %v", got.Path, want.Path)
@@ -123,7 +127,8 @@ func TestGithubRelease_Upload_Command_MultipleFilesGlob(t *testing.T) {
 	}
 
 	//nolint:gosec // ignore for testing purposes
-	want := exec.Command(
+	want := exec.CommandContext(
+		context.Background(),
 		_gh,
 		releaseCmd,
 		uploadAction,
@@ -133,7 +138,7 @@ func TestGithubRelease_Upload_Command_MultipleFilesGlob(t *testing.T) {
 		fmt.Sprintf("--clobber=%t", u.Clobber),
 	)
 
-	got := u.Command()
+	got := u.Command(context.Background())
 
 	if got.Path != want.Path {
 		t.Errorf("Command path is %v, want %v", got.Path, want.Path)
@@ -158,7 +163,7 @@ func TestGithubRelease_Upload_Exec_Error(t *testing.T) {
 		Tag:     "tag",
 	}
 
-	err := u.Exec()
+	err := u.Exec(context.Background())
 	if err == nil {
 		t.Errorf("Exec should have returned err: %v", err)
 	}

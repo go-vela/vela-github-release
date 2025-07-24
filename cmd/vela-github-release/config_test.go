@@ -3,6 +3,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os/exec"
@@ -21,7 +22,8 @@ func TestGithubRelease_Config_Command(t *testing.T) {
 	}
 
 	//nolint:gosec // ignore for testing purposes
-	want := exec.Command(
+	want := exec.CommandContext(
+		context.Background(),
 		_gh,
 		"auth",
 		"login",
@@ -29,7 +31,7 @@ func TestGithubRelease_Config_Command(t *testing.T) {
 		"--with-token",
 	)
 
-	got := c.Command()
+	got := c.Command(context.Background())
 
 	if got.Path != want.Path {
 		t.Errorf("Command path is %v, want %v", got.Path, want.Path)
@@ -55,7 +57,7 @@ func TestGithubRelease_Config_Exec_Error(t *testing.T) {
 		Token:    "token",
 	}
 
-	err := c.Exec()
+	err := c.Exec(context.Background())
 	if err == nil {
 		t.Errorf("Exec should have returned err: %v", err)
 	}

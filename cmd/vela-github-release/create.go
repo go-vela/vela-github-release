@@ -3,6 +3,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os/exec"
@@ -43,7 +44,7 @@ type Create struct {
 
 // Command formats and outputs the Create command from
 // the provided configuration to create resources.
-func (c *Create) Command() *exec.Cmd {
+func (c *Create) Command(ctx context.Context) *exec.Cmd {
 	logrus.Trace("creating gh create command from plugin configuration")
 
 	// variable to store flags for command
@@ -107,16 +108,16 @@ func (c *Create) Command() *exec.Cmd {
 		flags = append(flags, fmt.Sprintf("--title=%s", c.Title))
 	}
 
-	return exec.Command(_gh, flags...)
+	return exec.CommandContext(ctx, _gh, flags...)
 }
 
 // Exec formats and runs the commands for applying
 // the provided configuration to the resources.
-func (c *Create) Exec() error {
+func (c *Create) Exec(ctx context.Context) error {
 	logrus.Debug("running create with provided configuration")
 
 	// create command for the target branch
-	cmd := c.Command()
+	cmd := c.Command(ctx)
 
 	// run the create command for the target branch
 	err := execCmd(cmd, nil)

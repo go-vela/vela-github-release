@@ -3,6 +3,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os/exec"
@@ -25,7 +26,7 @@ type List struct {
 
 // Command formats and outputs the List command from
 // the provided configuration to list resources.
-func (l *List) Command() *exec.Cmd {
+func (l *List) Command(ctx context.Context) *exec.Cmd {
 	logrus.Trace("creating gh list command from plugin configuration")
 
 	// variable to store flags for command
@@ -40,16 +41,16 @@ func (l *List) Command() *exec.Cmd {
 	// add flag for list from provided list
 	flags = append(flags, fmt.Sprintf("--limit=%d", l.Limit))
 
-	return exec.Command(_gh, flags...)
+	return exec.CommandContext(ctx, _gh, flags...)
 }
 
 // Exec formats and runs the commands for applying
 // the provided configuration to the resources.
-func (l *List) Exec() error {
+func (l *List) Exec(ctx context.Context) error {
 	logrus.Debug("running list with provided configuration")
 
 	// list command for the number of items to fetch
-	cmd := l.Command()
+	cmd := l.Command(ctx)
 
 	// run the list command for the limit of items
 	err := execCmd(cmd, nil)
