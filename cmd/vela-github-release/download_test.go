@@ -3,7 +3,6 @@
 package main
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"os/exec"
@@ -20,7 +19,7 @@ func TestGithubRelease_Download_Command(t *testing.T) {
 
 	//nolint:gosec // ignore for testing purposes
 	want := exec.CommandContext(
-		context.Background(),
+		t.Context(),
 		_gh,
 		releaseCmd,
 		downloadAction,
@@ -29,7 +28,7 @@ func TestGithubRelease_Download_Command(t *testing.T) {
 		fmt.Sprintf("--pattern=%s", "pattern"),
 	)
 
-	got := d.Command(context.Background())
+	got := d.Command(t.Context())
 
 	if got.Path != want.Path {
 		t.Errorf("Command path is %v, want %v", got.Path, want.Path)
@@ -54,7 +53,7 @@ func TestGithubRelease_Download_Exec_Error(t *testing.T) {
 		Tag:       "tag",
 	}
 
-	err := d.Exec(context.Background())
+	err := d.Exec(t.Context())
 	if err == nil {
 		t.Errorf("Exec should have returned err: %v", err)
 	}

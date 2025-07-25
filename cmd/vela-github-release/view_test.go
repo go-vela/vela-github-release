@@ -3,7 +3,6 @@
 package main
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"os/exec"
@@ -19,7 +18,7 @@ func TestGithubRelease_View_Command(t *testing.T) {
 
 	//nolint:gosec // ignore for testing purposes
 	want := exec.CommandContext(
-		context.Background(),
+		t.Context(),
 		_gh,
 		releaseCmd,
 		viewAction,
@@ -27,7 +26,7 @@ func TestGithubRelease_View_Command(t *testing.T) {
 		fmt.Sprintf("--web=%t", v.Web),
 	)
 
-	got := v.Command(context.Background())
+	got := v.Command(t.Context())
 
 	if got.Path != want.Path {
 		t.Errorf("Command path is %v, want %v", got.Path, want.Path)
@@ -51,7 +50,7 @@ func TestGithubRelease_View_Exec_Error(t *testing.T) {
 		Web: false,
 	}
 
-	err := v.Exec(context.Background())
+	err := v.Exec(t.Context())
 	if err == nil {
 		t.Errorf("Exec should have returned err: %v", err)
 	}

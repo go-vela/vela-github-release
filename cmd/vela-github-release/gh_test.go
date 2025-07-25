@@ -3,7 +3,6 @@
 package main
 
 import (
-	"context"
 	"testing"
 
 	"github.com/spf13/afero"
@@ -14,7 +13,7 @@ func TestGithub_CLI_install(t *testing.T) {
 	appFS = afero.NewMemMapFs()
 
 	// run test
-	err := install(context.Background(), "2.14.4", "2.14.4")
+	err := install(t.Context(), "2.14.4", "2.14.4")
 	if err != nil {
 		t.Errorf("install returned err: %v", err)
 	}
@@ -25,7 +24,7 @@ func TestGithub_CLI_install_NoBinary(t *testing.T) {
 	appFS = afero.NewMemMapFs()
 
 	// run test
-	err := install(context.Background(), "2.14.3", "2.14.4")
+	err := install(t.Context(), "2.14.3", "2.14.4")
 	if err == nil {
 		t.Errorf("install should have returned err ")
 	}
@@ -46,7 +45,7 @@ func TestGithub_CLI_install_NotWritable(t *testing.T) {
 	}
 
 	// run test
-	err = install(context.Background(), "2.14.3", "2.14.4")
+	err = install(t.Context(), "2.14.3", "2.14.4")
 	if err == nil {
 		t.Errorf("install should have returned err")
 	}
