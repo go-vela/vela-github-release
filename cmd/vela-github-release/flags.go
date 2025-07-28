@@ -8,6 +8,18 @@ import "github.com/urfave/cli/v3"
 // supported command line interface (CLI) flags
 // for the plugin.
 func flags() []cli.Flag {
+	var _flags []cli.Flag
+
+	_flags = append(_flags, coreFlags()...)
+	_flags = append(_flags, githubConfigFlags()...)
+	_flags = append(_flags, releaseOperationFlags()...)
+	_flags = append(_flags, utilityFlags()...)
+
+	return _flags
+}
+
+// coreFlags returns the core application flags.
+func coreFlags() []cli.Flag {
 	return []cli.Flag{
 		&cli.StringSliceFlag{
 			Name:  "files",
@@ -52,7 +64,12 @@ func flags() []cli.Flag {
 				cli.File("/vela/secrets/github-release/version"),
 			),
 		},
-		// Config Flags
+	}
+}
+
+// githubConfigFlags returns configuration-related flags.
+func githubConfigFlags() []cli.Flag {
+	return []cli.Flag{
 		&cli.StringFlag{
 			Name:  "config.action",
 			Usage: "action to perform against github instance",
@@ -88,6 +105,12 @@ func flags() []cli.Flag {
 				cli.File("/vela/secrets/github-release/config/token"),
 			),
 		},
+	}
+}
+
+// releaseOperationFlags returns flags for create, delete, and view operations.
+func releaseOperationFlags() []cli.Flag {
+	return []cli.Flag{
 		// Create Flags
 		&cli.BoolFlag{
 			Name:  "create.draft",
@@ -162,6 +185,23 @@ func flags() []cli.Flag {
 			),
 			//  TODO: should this be set with default to bypass the prompt? : Value: true,
 		},
+		// View Flags
+		&cli.BoolFlag{
+			Name:  "view.web",
+			Usage: "open the release in the browser",
+			Sources: cli.NewValueSourceChain(
+				cli.EnvVar("PARAMETER_WEB"),
+				cli.EnvVar("VIEW_WEB"),
+				cli.File("/vela/parameters/github-release/view/web"),
+				cli.File("/vela/secrets/github-release/view/web"),
+			),
+		},
+	}
+}
+
+// utilityFlags returns flags for download, list, and upload operations.
+func utilityFlags() []cli.Flag {
+	return []cli.Flag{
 		// Download Flags
 		&cli.StringFlag{
 			Name:  "download.dir",
@@ -205,17 +245,6 @@ func flags() []cli.Flag {
 				cli.EnvVar("UPLOAD_CLOBBER"),
 				cli.File("/vela/parameters/github-release/upload/clobber"),
 				cli.File("/vela/secrets/github-release/upload/clobber"),
-			),
-		},
-		// View Flags
-		&cli.BoolFlag{
-			Name:  "view.web",
-			Usage: "open the release in the browser",
-			Sources: cli.NewValueSourceChain(
-				cli.EnvVar("PARAMETER_WEB"),
-				cli.EnvVar("VIEW_WEB"),
-				cli.File("/vela/parameters/github-release/view/web"),
-				cli.File("/vela/secrets/github-release/view/web"),
 			),
 		},
 	}
