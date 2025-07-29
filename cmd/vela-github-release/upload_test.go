@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"os/exec"
-	"reflect"
 	"testing"
 )
 
@@ -19,7 +18,8 @@ func TestGithubRelease_Upload_Command(t *testing.T) {
 	}
 
 	//nolint:gosec // ignore for testing purposes
-	want := exec.Command(
+	want := exec.CommandContext(
+		t.Context(),
 		_gh,
 		releaseCmd,
 		uploadAction,
@@ -28,10 +28,20 @@ func TestGithubRelease_Upload_Command(t *testing.T) {
 		fmt.Sprintf("--clobber=%t", u.Clobber),
 	)
 
-	got := u.Command()
+	got := u.Command(t.Context())
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("execCmd is %v, want %v", got, want)
+	if got.Path != want.Path {
+		t.Errorf("Command path is %v, want %v", got.Path, want.Path)
+	}
+
+	if len(got.Args) != len(want.Args) {
+		t.Errorf("Command args length is %v, want %v", len(got.Args), len(want.Args))
+	}
+
+	for i, arg := range got.Args {
+		if i < len(want.Args) && arg != want.Args[i] {
+			t.Errorf("Command args[%d] is %v, want %v", i, arg, want.Args[i])
+		}
 	}
 }
 
@@ -44,7 +54,8 @@ func TestGithubRelease_Upload_Command_FileMissing(t *testing.T) {
 	}
 
 	//nolint:gosec // ignore for testing purposes
-	want := exec.Command(
+	want := exec.CommandContext(
+		t.Context(),
 		_gh,
 		releaseCmd,
 		uploadAction,
@@ -52,10 +63,20 @@ func TestGithubRelease_Upload_Command_FileMissing(t *testing.T) {
 		fmt.Sprintf("--clobber=%t", u.Clobber),
 	)
 
-	got := u.Command()
+	got := u.Command(t.Context())
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("execCmd is %v, want %v", got, want)
+	if got.Path != want.Path {
+		t.Errorf("Command path is %v, want %v", got.Path, want.Path)
+	}
+
+	if len(got.Args) != len(want.Args) {
+		t.Errorf("Command args length is %v, want %v", len(got.Args), len(want.Args))
+	}
+
+	for i, arg := range got.Args {
+		if i < len(want.Args) && arg != want.Args[i] {
+			t.Errorf("Command args[%d] is %v, want %v", i, arg, want.Args[i])
+		}
 	}
 }
 
@@ -68,7 +89,8 @@ func TestGithubRelease_Upload_Command_MultipleFiles(t *testing.T) {
 	}
 
 	//nolint:gosec // ignore for testing purposes
-	want := exec.Command(
+	want := exec.CommandContext(
+		t.Context(),
 		_gh,
 		releaseCmd,
 		uploadAction,
@@ -78,10 +100,20 @@ func TestGithubRelease_Upload_Command_MultipleFiles(t *testing.T) {
 		fmt.Sprintf("--clobber=%t", u.Clobber),
 	)
 
-	got := u.Command()
+	got := u.Command(t.Context())
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("execCmd is %v, want %v", got, want)
+	if got.Path != want.Path {
+		t.Errorf("Command path is %v, want %v", got.Path, want.Path)
+	}
+
+	if len(got.Args) != len(want.Args) {
+		t.Errorf("Command args length is %v, want %v", len(got.Args), len(want.Args))
+	}
+
+	for i, arg := range got.Args {
+		if i < len(want.Args) && arg != want.Args[i] {
+			t.Errorf("Command args[%d] is %v, want %v", i, arg, want.Args[i])
+		}
 	}
 }
 
@@ -94,7 +126,8 @@ func TestGithubRelease_Upload_Command_MultipleFilesGlob(t *testing.T) {
 	}
 
 	//nolint:gosec // ignore for testing purposes
-	want := exec.Command(
+	want := exec.CommandContext(
+		t.Context(),
 		_gh,
 		releaseCmd,
 		uploadAction,
@@ -104,10 +137,20 @@ func TestGithubRelease_Upload_Command_MultipleFilesGlob(t *testing.T) {
 		fmt.Sprintf("--clobber=%t", u.Clobber),
 	)
 
-	got := u.Command()
+	got := u.Command(t.Context())
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("execCmd is %v, want %v", got, want)
+	if got.Path != want.Path {
+		t.Errorf("Command path is %v, want %v", got.Path, want.Path)
+	}
+
+	if len(got.Args) != len(want.Args) {
+		t.Errorf("Command args length is %v, want %v", len(got.Args), len(want.Args))
+	}
+
+	for i, arg := range got.Args {
+		if i < len(want.Args) && arg != want.Args[i] {
+			t.Errorf("Command args[%d] is %v, want %v", i, arg, want.Args[i])
+		}
 	}
 }
 
@@ -119,7 +162,7 @@ func TestGithubRelease_Upload_Exec_Error(t *testing.T) {
 		Tag:     "tag",
 	}
 
-	err := u.Exec()
+	err := u.Exec(t.Context())
 	if err == nil {
 		t.Errorf("Exec should have returned err: %v", err)
 	}

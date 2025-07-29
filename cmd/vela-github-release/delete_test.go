@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"os/exec"
-	"reflect"
 	"testing"
 )
 
@@ -18,7 +17,8 @@ func TestGithubRelease_Delete_Command(t *testing.T) {
 	}
 
 	//nolint:gosec // ignore for testing purposes
-	want := exec.Command(
+	want := exec.CommandContext(
+		t.Context(),
 		_gh,
 		releaseCmd,
 		deleteAction,
@@ -26,10 +26,20 @@ func TestGithubRelease_Delete_Command(t *testing.T) {
 		fmt.Sprintf("--yes=%t", false),
 	)
 
-	got := d.Command()
+	got := d.Command(t.Context())
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("execCmd is %v, want %v", got, want)
+	if got.Path != want.Path {
+		t.Errorf("Command path is %v, want %v", got.Path, want.Path)
+	}
+
+	if len(got.Args) != len(want.Args) {
+		t.Errorf("Command args length is %v, want %v", len(got.Args), len(want.Args))
+	}
+
+	for i, arg := range got.Args {
+		if i < len(want.Args) && arg != want.Args[i] {
+			t.Errorf("Command args[%d] is %v, want %v", i, arg, want.Args[i])
+		}
 	}
 }
 
@@ -40,7 +50,7 @@ func TestGithubRelease_Delete_Exec_Error(t *testing.T) {
 		Yes: false,
 	}
 
-	err := d.Exec()
+	err := d.Exec(t.Context())
 	if err == nil {
 		t.Errorf("Exec should have returned err: %v", err)
 	}

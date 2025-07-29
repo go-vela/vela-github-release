@@ -3,6 +3,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os/exec"
@@ -32,7 +33,7 @@ type Download struct {
 
 // Command formats and outputs the Download command from
 // the provided configuration to dowmload resources.
-func (d *Download) Command() *exec.Cmd {
+func (d *Download) Command(ctx context.Context) *exec.Cmd {
 	logrus.Trace("creating gh download command from plugin configuration")
 
 	// variable to store flags for command
@@ -59,14 +60,14 @@ func (d *Download) Command() *exec.Cmd {
 		flags = append(flags, fmt.Sprintf("--pattern=%s", pattern))
 	}
 
-	return exec.Command(_gh, flags...)
+	return exec.CommandContext(ctx, _gh, flags...)
 }
 
-func (d *Download) Exec() error {
+func (d *Download) Exec(ctx context.Context) error {
 	logrus.Debug("running download with provided configuration")
 
 	// download command for the directory
-	cmd := d.Command()
+	cmd := d.Command(ctx)
 
 	// run the download command for the directory
 	err := execCmd(cmd, nil)

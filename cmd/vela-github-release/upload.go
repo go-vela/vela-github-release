@@ -3,6 +3,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os/exec"
@@ -28,7 +29,7 @@ type Upload struct {
 
 // Command formats and outputs the Upload command from
 // the provided configuration to upload resources.
-func (u *Upload) Command() *exec.Cmd {
+func (u *Upload) Command(ctx context.Context) *exec.Cmd {
 	logrus.Trace("creating gh upload command from plugin configuration")
 
 	// variable to store flags for command
@@ -65,16 +66,16 @@ func (u *Upload) Command() *exec.Cmd {
 	// add flag for upload from provided upload
 	flags = append(flags, fmt.Sprintf("--clobber=%t", u.Clobber))
 
-	return exec.Command(_gh, flags...)
+	return exec.CommandContext(ctx, _gh, flags...)
 }
 
 // Exec formats and runs the commands for applying
 // the provided configuration to the resources.
-func (u *Upload) Exec() error {
+func (u *Upload) Exec(ctx context.Context) error {
 	logrus.Debug("running upload with the provided configuration")
 
 	// upload command for the existing asset
-	cmd := u.Command()
+	cmd := u.Command(ctx)
 
 	// run the upload command for the existng asset
 	err := execCmd(cmd, nil)

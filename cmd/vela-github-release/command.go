@@ -3,6 +3,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"os/exec"
@@ -35,7 +36,7 @@ func execCmd(e *exec.Cmd, f *os.File) error {
 
 // versionCmd is a helper function to output
 // the gh version information.
-func versionCmd() *exec.Cmd {
+func versionCmd(ctx context.Context) *exec.Cmd {
 	logrus.Trace("creating gh version command")
 
 	// variable to store flags for command
@@ -44,5 +45,5 @@ func versionCmd() *exec.Cmd {
 	// add flag for version gh command
 	flags = append(flags, "version")
 
-	return exec.Command(_gh, flags...)
+	return exec.CommandContext(ctx, _gh, flags...)
 }

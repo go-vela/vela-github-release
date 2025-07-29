@@ -3,6 +3,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 
@@ -37,17 +38,17 @@ type Plugin struct {
 }
 
 // Exec formats and runs the commands for gh plugin.
-func (p *Plugin) Exec() error {
+func (p *Plugin) Exec(ctx context.Context) error {
 	logrus.Debug("running plugin with provided configuration")
 
 	// output gh version for troubleshooting
-	err := execCmd(versionCmd(), nil)
+	err := execCmd(versionCmd(ctx), nil)
 	if err != nil {
 		return err
 	}
 
 	// execute config configuration
-	err = p.Config.Exec()
+	err = p.Config.Exec(ctx)
 	if err != nil {
 		return err
 	}
@@ -56,22 +57,22 @@ func (p *Plugin) Exec() error {
 	switch p.Config.Action {
 	case createAction:
 		// execute create action
-		return p.Create.Exec()
+		return p.Create.Exec(ctx)
 	case deleteAction:
 		// execute delete action
-		return p.Delete.Exec()
+		return p.Delete.Exec(ctx)
 	case downloadAction:
 		// execute download action
-		return p.Download.Exec()
+		return p.Download.Exec(ctx)
 	case listAction:
 		// execute list action
-		return p.List.Exec()
+		return p.List.Exec(ctx)
 	case uploadAction:
 		// execute upload action
-		return p.Upload.Exec()
+		return p.Upload.Exec(ctx)
 	case viewAction:
 		// execute view action
-		return p.View.Exec()
+		return p.View.Exec(ctx)
 	default:
 		return fmt.Errorf(
 			"%w: %s (Valid actions: %s, %s, %s, %s, %s, %s)",
