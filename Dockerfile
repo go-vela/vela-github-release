@@ -4,13 +4,13 @@
 #
 # https://github.com/moby/moby/issues/37345
 # renovate: datasource=github-tags depName=cli/cli extractVersion=^v(?<version>.*)$
-ARG GH_VERSION=2.67.0
+ARG GH_VERSION=2.76.1
 
 ###################################################################################
 ##    docker build --no-cache --target binary -t vela-github-release:binary .    ##
 ###################################################################################
 
-FROM alpine:3.21.3@sha256:a8560b36e8b8210634f77d9f7f9efd7ffa463e380b75e2e74aff4511df3ef88c as binary
+FROM alpine:3.22.1@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1 as binary
 
 ARG GH_VERSION
 
@@ -30,7 +30,7 @@ RUN wget -q "${GH_RELEASE_URL}/${GH_FILENAME}" -O "${GH_FILENAME}" && \
 ##    docker build --no-cache -t vela-github-release:local .    ##
 ##################################################################
 
-FROM alpine:3.21.3@sha256:a8560b36e8b8210634f77d9f7f9efd7ffa463e380b75e2e74aff4511df3ef88c
+FROM alpine:3.22.1@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
 
 ARG GH_VERSION
 
