@@ -33,6 +33,7 @@ func coreFlags() []cli.Flag {
 		},
 		&cli.StringFlag{
 			Name:  "log.level",
+			Value: "info",
 			Usage: "set log level - options: (trace|debug|info|warn|error|fatal|panic)",
 			Sources: cli.NewValueSourceChain(
 				cli.EnvVar("PARAMETER_LOG_LEVEL"),
@@ -41,7 +42,6 @@ func coreFlags() []cli.Flag {
 				cli.File("/vela/parameters/github-release/log_level"),
 				cli.File("/vela/secrets/github-release/log_level"),
 			),
-			Value: "info",
 		},
 		&cli.StringFlag{
 			Name:  "tag",
@@ -82,6 +82,7 @@ func githubConfigFlags() []cli.Flag {
 		},
 		&cli.StringFlag{
 			Name:  "config.hostname",
+			Value: "github.com",
 			Usage: "hostname to set for github instance",
 			Sources: cli.NewValueSourceChain(
 				cli.EnvVar("PARAMETER_HOSTNAME"),
@@ -91,7 +92,6 @@ func githubConfigFlags() []cli.Flag {
 				cli.File("/vela/parameters/github-release/config/hostname"),
 				cli.File("/vela/secrets/github-release/config/hostname"),
 			),
-			Value: "github.com",
 		},
 		&cli.StringFlag{
 			Name:  "config.token",
@@ -154,6 +154,7 @@ func releaseOperationFlags() []cli.Flag {
 		},
 		&cli.StringFlag{
 			Name:  "create.target",
+			Value: "main",
 			Usage: "target branch or commit SHA",
 			Sources: cli.NewValueSourceChain(
 				cli.EnvVar("PARAMETER_TARGET"),
@@ -161,7 +162,6 @@ func releaseOperationFlags() []cli.Flag {
 				cli.File("/vela/parameters/github-release/create/target"),
 				cli.File("/vela/secrets/github-release/create/target"),
 			),
-			Value: "main",
 		},
 		&cli.StringFlag{
 			Name:  "create.title",
@@ -205,6 +205,7 @@ func utilityFlags() []cli.Flag {
 		// Download Flags
 		&cli.StringFlag{
 			Name:  "download.dir",
+			Value: ".",
 			Usage: "the directory to download files",
 			Sources: cli.NewValueSourceChain(
 				cli.EnvVar("PARAMETER_DIR"),
@@ -212,7 +213,6 @@ func utilityFlags() []cli.Flag {
 				cli.File("/vela/parameters/github-release/download/dir"),
 				cli.File("/vela/secrets/github-release/download/dir"),
 			),
-			Value: ".",
 		},
 		&cli.StringSliceFlag{
 			Name:  "download.patterns",
@@ -227,14 +227,14 @@ func utilityFlags() []cli.Flag {
 		// List Flags
 		&cli.IntFlag{
 			Name:  "list.limit",
-			Usage: "maximum number of items to fetch",
+			Value: 30,
+			Usage: "maximum number of items to fetch for list action",
 			Sources: cli.NewValueSourceChain(
 				cli.EnvVar("PARAMETER_LIMIT"),
 				cli.EnvVar("LIST_LIMIT"),
 				cli.File("/vela/parameters/github-release/list/limit"),
 				cli.File("/vela/secrets/github-release/list/limit"),
 			),
-			Value: 30,
 		},
 		// Upload Flags
 		&cli.BoolFlag{

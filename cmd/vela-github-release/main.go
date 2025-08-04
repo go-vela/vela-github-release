@@ -6,6 +6,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"net/mail"
 	"os"
 
 	"github.com/sirupsen/logrus"
@@ -33,10 +34,15 @@ func main() {
 		Name:      "vela-github-release",
 		Usage:     "Vela Github Release plugin for managing Gihub Releases in a Vela Pipeline.",
 		Copyright: "Copyright 2022 Target Brands, Inc. All rights reserved.",
-		Authors:   []any{"Vela Admins <vela@target.com>"},
-		Action:    run,
-		Version:   pluginVersion.Semantic(),
-		Flags:     flags(),
+		Authors: []any{
+			&mail.Address{
+				Name:    "Vela Admins",
+				Address: "vela@target.com",
+			},
+		},
+		Action:  run,
+		Version: pluginVersion.Semantic(),
+		Flags:   flags(),
 	}
 
 	if err := app.Run(context.Background(), os.Args); err != nil {
