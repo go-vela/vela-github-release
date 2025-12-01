@@ -66,6 +66,13 @@ func (c *Config) Command(ctx context.Context) *exec.Cmd {
 func (c *Config) Exec(ctx context.Context) error {
 	logrus.Debug("running config with provided configuration")
 
+	// if environment contains GH auth, skip login step
+	if os.Getenv("GITHUB_TOKEN") != "" || os.Getenv("GH_TOKEN") != "" {
+		logrus.Debug("GITHUB_TOKEN or GH_TOKEN detected in environment, skipping gh auth login")
+
+		return nil
+	}
+
 	// create gh token file for authentication
 	err := c.Write()
 	if err != nil {
