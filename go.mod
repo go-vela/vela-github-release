@@ -1,15 +1,15 @@
 module github.com/go-vela/vela-github-release
 
-go 1.25.7
+go 1.26.8
 
 require (
-	github.com/Masterminds/semver/v3 v3.4.0
-	github.com/go-vela/server v0.27.5
-	github.com/hashicorp/go-getter/v2 v2.2.3
+	github.com/Masterminds/semver/v3 v3.5.0
+	github.com/go-vela/server v0.28.8
+	github.com/hashicorp/go-getter/v2 v2.2.4
 	github.com/joho/godotenv v1.5.1
-	github.com/sirupsen/logrus v1.9.4
+	github.com/sirupsen/logrus v1.10.2
 	github.com/spf13/afero v1.15.0
-	github.com/urfave/cli/v3 v3.7.0
+	github.com/urfave/cli/v3 v3.13.0
 )
 
 require (
@@ -18,11 +18,11 @@ require (
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/go-safetemp v1.0.0 // indirect
-	github.com/hashicorp/go-version v1.6.0 // indirect
-	github.com/klauspost/compress v1.17.11 // indirect
+	github.com/hashicorp/go-version v1.9.0 // indirect
+	github.com/klauspost/compress v1.20.1 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/go-testing-interface v1.14.1 // indirect
-	github.com/ulikunitz/xz v0.5.14 // indirect
-	golang.org/x/sys v0.39.0 // indirect
-	golang.org/x/text v0.32.0 // indirect
+	github.com/ulikunitz/xz v0.5.17 // indirect
+	golang.org/x/sys v0.48.0 // indirect
+	golang.org/x/text v0.42.0 // indirect
 )
