@@ -1,15 +1,15 @@
 module github.com/go-vela/vela-github-release
 
-go 1.26.8
+go 1.27.3
 
 require (
 	github.com/Masterminds/semver/v3 v3.5.0
-	github.com/go-vela/server v0.28.8
-	github.com/hashicorp/go-getter/v2 v2.2.4
+	github.com/go-vela/server v0.28.10
+	github.com/hashicorp/go-getter/v2 v2.2.6
 	github.com/joho/godotenv v1.5.1
 	github.com/sirupsen/logrus v1.10.2
 	github.com/spf13/afero v1.15.0
-	github.com/urfave/cli/v3 v3.13.0
+	github.com/urfave/cli/v3 v3.14.0
 )
 
 require (
@@ -23,6 +23,6 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/go-testing-interface v1.14.1 // indirect
 	github.com/ulikunitz/xz v0.5.17 // indirect
-	golang.org/x/sys v0.48.0 // indirect
-	golang.org/x/text v0.42.0 // indirect
+	golang.org/x/sys v0.49.0 // indirect
+	golang.org/x/text v0.43.0 // indirect
 )
